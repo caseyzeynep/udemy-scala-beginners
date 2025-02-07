@@ -3,12 +3,19 @@ package lectures.part2oop
 import scala.language.postfixOps
 
 object MethodNotations extends App {
-  class Person(val name: String, favouriteMovie: String) {
+  class Person(val name: String, favouriteMovie: String, val age: Int = 0) {
     def likes(movie: String): Boolean = movie == favouriteMovie
     def +(person: Person): String = s"${this.name} is hanging out with ${person.name}"
+    def +(nicName: String): Person = new Person(s"$name ($nicName)", favouriteMovie)
     def unary_! : String = s"$name, what the heck??" // spaces are important
+    def unary_+ : Person = new Person(name, favouriteMovie, age + 1)
     def isAlive: Boolean = true
+    def learns(subject: String) = s"$name learns $subject "
+    def learnScala: String = this learns ("Scala")
+
     def apply(): String = s"Hi, my name is $name and I like $favouriteMovie "
+    def apply(n: Int): String = s"$name watched $favouriteMovie $n times"
+
   }
 
   // 1) Infix notation = operator notation (syntactic sugar)
@@ -41,5 +48,11 @@ object MethodNotations extends App {
   // 4) Apply
   println(mary.apply())
   println(mary()) // equivalent
+
+  // Exercise
+  println((mary + "the rockstar")())
+  println((+mary).age)
+  println(mary learnScala)
+  println(mary(2))
 
 }
